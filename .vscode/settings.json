@@ -1,6 +1,7 @@
 {
     "editor.fontSize": 16,
     "files.associations": {
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "thread": "cpp"
     }
 }
