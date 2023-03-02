@@ -2,6 +2,7 @@
     "editor.fontSize": 16,
     "files.associations": {
         "ostream": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "__threading_support": "cpp"
     }
 }
