@@ -21,8 +21,9 @@ void* ThreadB(void*)  //读操作，每隔1s查看钱和货的总值
 {
 	while (1)
 	{
-        
+        pthread_mutex_lock(&mutex);
 		printf("%d\n", a + b);
+        pthread_mutex_unlock(&mutex);
 		sleep(1);    
 	}
 }
