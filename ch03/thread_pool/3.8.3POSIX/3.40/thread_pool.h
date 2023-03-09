@@ -11,7 +11,7 @@ using namespace std;
 class CTask {
 protected:
 	string m_strTaskName;   //任务的名称
-	void* m_ptrData;    //要执行的任务的具体数据
+	string m_ptrData;    //要执行的任务的具体数据
 
 public:
 	CTask() = default;
@@ -19,7 +19,7 @@ public:
 		: m_strTaskName(taskName)
 		, m_ptrData(NULL) {}  //构造函数
 	virtual int Run() = 0;  //virtual关键字可以在派生类中重写该函数
-	void setData(void* data);   //设置任务数据
+	void setData(const string &s);   //设置任务数据
   
 	virtual ~CTask() {}  //析构函数
     

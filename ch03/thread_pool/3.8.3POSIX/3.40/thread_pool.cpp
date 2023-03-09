@@ -2,8 +2,8 @@
 #include <cstdio>
 
 //执行任务类的设置任务数据函数
-void CTask::setData(void* data) {
-	this->m_ptrData = data;
+void CTask::setData(const string &s) {
+	this->m_ptrData = s;
 }
 
 //静态成员初始化
@@ -45,11 +45,11 @@ void* CThreadPool::ThreadFunc(void* threadData) {
 		if (shutdown)
 		{
 			pthread_mutex_unlock(&m_pthreadMutex);
-			printf("[tid: %lu]\texit\n", tid);
+			printf("[tid: %lu]\t退出\n", tid);
 			pthread_exit(NULL);
 		}
         
-		printf("[tid: %lu]\trun: ", tid);  //打印本线程的id和运行状态
+		printf("[tid: %lu]\t运行: ", tid);  //打印本线程的id和运行状态
 		vector<CTask*>::iterator iter = m_vecTaskList.begin();
 		//取出一个任务并处理之
 		CTask* task;
@@ -62,7 +62,7 @@ void* CThreadPool::ThreadFunc(void* threadData) {
 		pthread_mutex_unlock(&m_pthreadMutex);  //结束对队列的互斥访问
         
 		task->Run();    //执行任务
-		printf("[tid: %lu]\tidle\n", tid);//打印本线程的id和空闲状态
+		printf("[tid: %lu]\t空闲\n", tid);//打印本线程的id和空闲状态
         
 	}
     
