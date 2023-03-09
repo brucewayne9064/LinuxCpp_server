@@ -63,6 +63,13 @@ int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);
 
 其中，cond是一个指向条件变量的指针，mutex是一个指向互斥锁的指针。这个函数返回0表示成功，非0表示失败
 
+### **五、C++11/14中的线程同步**
+
+- 基本互斥锁
+- 定时互斥锁
+- 递归互斥锁
+- 定时递归互斥锁
+
 
 
 
