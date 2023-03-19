@@ -8,6 +8,7 @@
         "list": "cpp",
         "__mutex_base": "cpp",
         "cstdio": "cpp",
-        "__config": "cpp"
+        "__config": "cpp",
+        "iostream": "cpp"
     }
 }
