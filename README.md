@@ -319,3 +319,55 @@ Linux支持PF和AF，所以指定协议用PF（protocol family），指定地址
   方法1：数据报结尾增加结束标识符，如果碰到结束标识符，表示结束，需要扫描每个字符
 
   方法2：在数据报前加一个报头，报头里有一个字段表示消息长度
+  
+  扩展结构体：
+  
+  ```c++
+  struct MyData {
+      int nLen;
+      char data[0];
+  };
+  ```
+  
+  - 可以实现数组的动态扩展，即根据需要分配不同大小的内存空间给结构体。
+  - 可以节省内存空间，因为char data[0]不占用结构体的空间，只是一个指向结构体后面数据的地址。
+  - 可以方便地通过data访问结构体后面的数据，而不需要额外的指针变量。
+  
+  一个简单的例子是：
+  
+  ```c
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <string.h>
+  
+  struct MyData {
+      int nLen;
+      char data[0];
+  };
+  
+  int main() {
+      char str[10] = "123456789";
+      struct MyData *p = (struct MyData *)malloc(sizeof(struct MyData) + strlen(str));
+      memcpy(p->data, str, strlen(str));
+      printf("p->data is %s\n", p->data);
+      free(p);
+      return 0;
+  }
+  ```
+  
+  输出：
+  
+  ```text
+  p->data is 123456789
+  ```
+  
+  可以看到，通过malloc分配了一个大小为sizeof(struct MyData) + strlen(str)的内存空间给p，然后将str拷贝到p->data中，最后通过p->data打印出了str的内容。
+  
+
+### 十二、I/O控制命令
+
+套接字的IO控制用于设置套接字的工作模式（阻塞式或者非阻塞式），也可以用来获取与套接字相关的IO操作的参数信息（比如读取输入缓冲区的字节数）
+
+### 十三、套接字选项
+
+设置或者获取套接字的属性
