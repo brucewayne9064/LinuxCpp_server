@@ -20,7 +20,7 @@ int main()
 	//设置服务端的地址信息
 	saddr.sin_family = AF_INET;
 	saddr.sin_port = htons(9999);
-	saddr.sin_addr.s_addr = inet_addr("192.168.0.118");//该ip为服务端所在的ip  
+	saddr.sin_addr.s_addr = inet_addr("192.168.239.128");//该ip为服务端所在的ip  
 
 	sockfd = socket(AF_INET, SOCK_DGRAM, 0);  //创建udp 的套接字  
 	if (sockfd < 0)
