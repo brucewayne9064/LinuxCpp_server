@@ -719,5 +719,42 @@ Linux中对信号的三种处理方式：
 
 网络情况较好，例如局域网用UPD，需要可靠性，例如互联网用TCP
 
-**2.1UDP循环服务器**
+- UDP循环服务器
+
+- TCP循环服务器
+
+### 三、多进程并发服务器
+
+当客户端有请求时，服务器用一个子进程来处理客户请求，父进程继续等待其他客户端的请求
+
+fork函数用于从一个已经存在的进程内创建一个新的进程，即子进程。该子进程为父进程的复制品（但不共享存储空间），除了进程号，资源使用情况，计时器等之外和父进程完全一样。
+
+```c++
+int main(int argc, char* argv[]) // tcp fork server
+{
+    创建套接字sockfd;
+    bind sockfd;
+    listen sockfd;
+    while(true)
+    {
+        int confd = accept();
+        if(fork() == 0) //子进程
+        {
+            close(sockfd);
+
+            func();
+
+            close(confd);
+            exit(0);
+        }
+        close(confd);
+    }
+    close(sockfd);
+    return 0;
+}
+```
+
+### 四、多线程并发服务器
+
+多进程服务器在创建进程时，消耗的系统资源较大，所以改为多线程（比多进程快一万倍）。但是一个进程内的线程共享资源，所以该机制存在同步问题。
 
