@@ -6,6 +6,18 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>	
+#include <sys/time.h>
+
+long t1,t2;
+
+// 返回自系统开机以来的毫秒数（tick）
+unsigned long GetTickCount()
+{
+	struct timeval tv;
+	if (gettimeofday(&tv, NULL) != 0) return 0;
+	return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -53,12 +65,15 @@ int main(int argc, char *argv[])
 			close(sockfd);
 			exit(-1);
 		}
+		t1 = GetTickCount();  //获取当前时间
 		pid_t pid = fork();
 		if (pid < 0) {
 			perror("fork error");
 			_exit(-1);
 		}
 		else if (0 == pid) { //子进程 接收客户端的信息，并返回给客户端
+			t2 = GetTickCount();  //获取当前时间
+			printf("time used:%dms\n", t2 - t1);
 			close(sockfd);   // 关闭监听套接字，这个套接字是从父进程继承过来
 			char recv_buf[1024] = { 0 };
 			int recv_len = 0;
