@@ -71,13 +71,13 @@ int main(void)
 	}
 	printf("listen port %d\n", MYPORT);
 
-	
+
 	fd_set fdsr; //文件描述符集的定义
 	int maxsock;
 	struct timeval tv;
 	conn_amount = 0;
 	sin_size = sizeof(client_addr);
-	maxsock = sock_fd;
+	maxsock = sock_fd;  //让最大套接字等于监听套接字
 	while (1)
 	{
 		//初始化文件描述符集合
@@ -86,7 +86,7 @@ int main(void)
 		//超时的设定，30s
 		tv.tv_sec = 30;
 		tv.tv_usec = 0;
-		//添加活动的连接
+		//添加活动的连接，把fd里面的新fd加入fdsr
 		for (i = 0; i < MAXCLINE; i++)
 		{
 			if (fd[i] != 0)
@@ -124,13 +124,13 @@ int main(void)
 				else
 				{
 					if (ret < BUF_SIZE)
-						memset(&buf[ret], '\0', 1);
+						memset(&buf[ret], '\0', 1);  //用’\0’字符填充buf数组中从ret位置开始的一个字节
 					printf("client[%d] send:%s\n", i, buf);
 					send(fd[i], buf, sizeof(buf), 0);//反射回去 
 				}
 			}
 		}
-		if (FD_ISSET(sock_fd, &fdsr))
+		if (FD_ISSET(sock_fd, &fdsr))  //while循环第一次从这个if开始, 调用slect后，sockfd的值被置为0了，所以会跳过这个if，等到下个循环才置1
 		{
 			new_fd = accept(sock_fd, (struct sockaddr *)&client_addr, &sin_size);
 			if (new_fd <= 0)
@@ -151,7 +151,7 @@ int main(void)
 				}
 				conn_amount++;
 				printf("new connection client[%d]%s:%d\n", conn_amount, inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
-				if (new_fd > maxsock)
+				if (new_fd > maxsock)  //更新maxsock，如果新的链接socket fd大于原本的maxsock就更新
 					maxsock = new_fd;
 			}
 			else
