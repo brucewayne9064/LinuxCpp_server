@@ -1,0 +1,46 @@
+<!--code blocks-->
+<!-- 
+    如果你想让index文件既能处理post也能处理get，
+    你可以在index.html文件中，使用JavaScript
+    来判断浏览器是否传递了颜色参数，然后根据情况
+    设置表单的method属性为GET或POST。
+    这种情况下，你可以输入以下两种URL：
+    localhost:端口号/index.html
+    localhost:端口号/index.html?color=颜色值
+    第一种URL不带参数，会使用post方法提交颜色参数。第二种URL带参数，会使用get方法提交颜色参数。😊
+ -->
+<html>
+<head>
+    <title>CGI Test</title>
+    <script>
+        //获取浏览器的URL
+        var url = window.location.href;
+        //获取URL中的参数
+        var params = url.split("?")[1];
+        //获取参数中的颜色值
+        var color = params ? params.split("=")[1] : "";
+        //判断是否有颜色值
+        if (color) {
+            //如果有颜色值，设置表单的method为GET
+            var method = "GET";
+        } else {
+            //如果没有颜色值，设置表单的method为POST
+            var method = "POST";
+        }
+    </script>
+</head>
+<body>
+    <h1>CGI Test</h1>
+    <p>This is a cgi test web page, please enter a color:</p>
+    <form id="form" action="color.cgi"> <!--不指定method属性-->
+        <input type="text" id="color" name="color" value="">
+        <input type="submit" value="Change">
+    </form>
+    <script>
+        //根据JavaScript变量设置表单的method属性和输入框的value属性
+        document.getElementById("form").method = method;
+        document.getElementById("color").value = color;
+        document.getElementById("form").submit(); //自动提交表单，如果直接输入URL且没有参数，那么默认方法是post，所以会自动跳转color.cgi
+    </script>
+</body>
+</html>
