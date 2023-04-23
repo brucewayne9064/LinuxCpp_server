@@ -21,7 +21,7 @@ void XFtpServerCMD::Reg(std::string cmd, XFtpTask *call) {
 		cout << "XFtpServerCMD::Reg cmd is null " << endl;
 		return;
 	}
-	// 已经注册的是否覆盖，不覆盖，提示错误
+	// 查看该cmd是否已经添加，如果已经添加则返回
 	if (calls.find(cmd) != calls.end()) {
 		cout << cmd << " is alredy register" << endl;
 		return;
@@ -29,8 +29,8 @@ void XFtpServerCMD::Reg(std::string cmd, XFtpTask *call) {
 	testout(cmd << " Reg success");
 	call->base = base;
 	call->cmdTask = this;
-	calls[cmd] = call;
-	calls_del[call] = 0;
+	calls[cmd] = call;   //加入calls集合
+	calls_del[call] = 0;  
 }
 
 void XFtpServerCMD::Event(bufferevent *bev, short events) {
@@ -43,7 +43,7 @@ void XFtpServerCMD::Event(bufferevent *bev, short events) {
 void XFtpServerCMD::Read(bufferevent *bev) {
 	cout << endl;
 	testout("At XFtpServerCMD::Read");
-	char buf[BUFS] = { 0 };
+	char buf[BUFS] = { 0 };    //BUFS 4096
 	while (1) {
 		int len = bufferevent_read(bev, buf, BUFS);
 		if (len <= 0) break;

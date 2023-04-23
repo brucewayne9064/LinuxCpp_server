@@ -12,7 +12,7 @@ void XFtpPORT::Parse(string type, string msg) {
 	// PORT n1,n2,n3,n4,n5,n6\r\n
 	// port = n5 * 256 + n6
 	
-	vector<string>vals;
+	vector<string>vals;  //参数一共有6个，这个vector用于存放参数，大小也应该是6个
 	string tmp = "";
 	for (int i = 5; i < msg.size(); i++) {
 		if (msg[i] == ',' || msg[i] == '\r') {

@@ -20,7 +20,7 @@ public:
 	XFtpServerCMD();
 	~XFtpServerCMD();
 private:
-	std::map<std::string, XFtpTask*>calls;
-	std::map<XFtpTask*, int>calls_del;
+	std::map<std::string, XFtpTask*>calls;  //存放所有的指令<string, XFtpTask>
+	std::map<XFtpTask*, int>calls_del;      //
 };
 

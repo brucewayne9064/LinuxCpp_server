@@ -35,7 +35,7 @@ using std::string;
 
 #define XThreadPoolGet XThreadPool::Get()
 
-//接待连接的回调函数,如果有连接，就会通知初始分发器调用该函数
+//接待连接的回调函数,如果有连接，就会通知初始分发器调用该函数，由该函数处理连接
 void listen_cb(struct evconnlistener *ev, evutil_socket_t s, struct sockaddr *addr, int socklen, void *arg) {
 	testout("main thread At listen_cb");
 	sockaddr_in *sin = (sockaddr_in*)addr;

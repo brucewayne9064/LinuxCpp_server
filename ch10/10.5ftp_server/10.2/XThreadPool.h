@@ -15,7 +15,7 @@ public:
 	void Init(int threadCount);
 
 	// 分发线程
-	void Dispatch(XTask*,int arg);
+	void Dispatch(XTask*);
 private:
 	int threadCount;  //线程池中的线程总数
 	int lastThread = -1;

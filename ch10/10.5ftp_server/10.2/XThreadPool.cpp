@@ -1,14 +1,13 @@
 #include "XThreadPool.h"
-#include "testUtil.h"
 #include "XThread.h"
-#include <iostream>
-#include <chrono>
+#include "XTask.h"
+#include "testUtil.h"
 #include <thread>
-
+#include <iostream>
 
 
 //分配任务到线程池
-void XThreadPool::Dispatch(XTask *task,int arg) {
+void XThreadPool::Dispatch(XTask *task) {
 	testout("main thread At XThreadPoll::dispathch()");
 	
 	if (!task) return;
@@ -19,7 +18,7 @@ void XThreadPool::Dispatch(XTask *task,int arg) {
 	// 添加任务
 	t->AddTack(task);
 	// 激活线程
-	t->Activate(arg);
+	t->Activate();
 }
 
 
