@@ -1,3 +1,4 @@
+#define TEST
 #include <iostream>
 #include <signal.h>
 #include <stdlib.h>

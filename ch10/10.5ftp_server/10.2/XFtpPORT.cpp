@@ -1,9 +1,11 @@
+#define TEST
 #include "XFtpPORT.h"
 #include "testUtil.h"
 
 #include <iostream>
 #include <vector>
 using namespace std;
+
 
 
 void XFtpPORT::Parse(string type, string msg) {

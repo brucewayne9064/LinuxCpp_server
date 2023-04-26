@@ -1,18 +1,20 @@
+#define TEST
 #include "XFtpRETR.h"
 #include "testUtil.h"
 #include <event2/bufferevent.h>
 #include <event2/event.h>
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 void XFtpRETR::Parse(string type, string msg) {
 	testout("At XFtpRETR::Parse");
-	int pos = msg.rfind(" ") + 1;
-	string filename = msg.substr(pos, msg.size() - pos - 2);
-	string path = cmdTask->rootDir + cmdTask->curDir + filename;
+	int pos = msg.rfind(" ") + 1;  //文件名开始的位置(最后一个空格后面的部分)
+	string filename = msg.substr(pos, msg.size() - pos - 2);  //提取文件名的字符串
+	string path = cmdTask->rootDir + cmdTask->curDir + filename;  //拼接完整路径
 	testout("filepath:[" << path << "]");
-	fp = fopen(path.c_str(), "rb");
+	fp = fopen(path.c_str(), "rb");  //以二进制模式打开文件
 	if (fp) {
 		ConnectoPORT();
 		ResCMD("150 File OK");
@@ -42,7 +44,7 @@ void XFtpRETR::Event(bufferevent *bev, short events) {
 		ClosePORT();
 	}
 	else if (events & BEV_EVENT_CONNECTED) {
-		cout << "TXFtpRETR BEV_EVENT_CONNECTED" << endl;
+		cout << "XFtpRETR BEV_EVENT_CONNECTED" << endl;
 	}
 }
 

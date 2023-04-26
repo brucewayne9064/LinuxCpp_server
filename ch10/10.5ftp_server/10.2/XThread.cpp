@@ -1,3 +1,4 @@
+#define TEST
 #include "XThread.h"
 #include "testUtil.h"
 #include <thread>
@@ -25,7 +26,7 @@ void XThread::Notify(evutil_socket_t fd, short which) {
 	int re = read(fd, buf, 1);
 	if (re < 0)
 		return;
-	cout << id << " thread recv" << buf << endl;
+	std::cout << id << " thread recv" << buf << std::endl;
 }
 
 
@@ -57,7 +58,7 @@ bool XThread::Setup() {
 	int fds[2]; //fds[0]是读端，fds[1]是写端
 
 	if (pipe(fds)) {
-		cerr << "pipe failed" << endl;
+		std::cerr << "pipe failed" << std::endl;
 		return false;
 	}
 
@@ -70,7 +71,7 @@ bool XThread::Setup() {
 	this->base = event_base_new_with_config(ev_conf);
 	event_config_free(ev_conf);
 	if (!base) {
-		cout << "event_base_new_with_config error!" << endl;
+		std::cout << "event_base_new_with_config error!" << std::endl;
 		return false;
 	}
 
@@ -89,7 +90,7 @@ void XThread::Activate() {
 	int re = write(notify_send_fd, "c", 1);
 
 	if (re <= 0) {
-		cerr << "XThread::Activate() fail" << endl;
+		std::cerr << "XThread::Activate() fail" << std::endl;
 	}
 
     //从列表中获取任务并初始化

@@ -1,3 +1,4 @@
+#define TEST
 #include "XFtpFactory.h"
 #include "XFtpServerCMD.h"
 #include "XFtpUSER.h"
@@ -6,6 +7,7 @@
 #include "XFtpRETR.h"
 #include "XFtpSTOR.h"
 #include "testUtil.h"
+
 
  
 XTask *XFtpFactory::CreateTask() {

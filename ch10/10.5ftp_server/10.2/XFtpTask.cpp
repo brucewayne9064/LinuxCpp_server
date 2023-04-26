@@ -1,3 +1,4 @@
+#define TEST
 #include "XFtpTask.h"
 #include "testUtil.h"
 
@@ -5,6 +6,7 @@
 #include <event2/event.h>
 
 #include <string.h>
+
 #include <iostream>
 using namespace std;
 

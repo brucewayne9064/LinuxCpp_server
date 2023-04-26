@@ -1,9 +1,11 @@
+#define TEST
 #include "XThreadPool.h"
 #include "XThread.h"
 #include "XTask.h"
 #include "testUtil.h"
 #include <thread>
 #include <iostream>
+
 
 
 //分配任务到线程池

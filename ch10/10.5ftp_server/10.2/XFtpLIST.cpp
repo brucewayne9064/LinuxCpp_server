@@ -1,9 +1,11 @@
+#define TEST
 #include "XFtpLIST.h"
 #include "event2/bufferevent.h"
 #include "event2/event.h"
 #include "testUtil.h"
 #include <string>
 using namespace std;
+
 
  
 
@@ -54,7 +56,7 @@ void XFtpLIST::Parse(std::string type, std::string msg) {
 		int pos = msg.rfind(" ") + 1;
 		//去掉结尾的\r\n
 		string path = msg.substr(pos, msg.size() - pos - 2);
-		if (path[0] == '/') //局对路径
+		if (path[0] == '/') //绝对路径
 		{
 			cmdTask->curDir = path;
 		}
@@ -96,13 +98,14 @@ void XFtpLIST::Parse(std::string type, std::string msg) {
 }
 
 string XFtpLIST::GetListData(string path) {
+	//获取给定路径下的文件列表
 	// -rwxrwxrwx 1 root root 418 Mar 21 16:10 XFtpFactory.cpp
 
 	string data = "";
 	string cmd = "ls -l ";
-	cmd += path;
-	FILE *f = popen(cmd.c_str(), "r");
-	if (!f) return data;
+	cmd += path;    //将 path 参数的值添加到 cmd 字符串的末尾
+	FILE *f = popen(cmd.c_str(), "r");   //使用 popen 函数执行 cmd 字符串中的命令, 将结果存储在文件指针 f 中
+	if (!f) return data;  // 如果 f 为空，则返回空字符串
 	char buf[1024] = {0};
 	while (1) {
 		int len = fread(buf, 1, sizeof(buf) - 1, f);

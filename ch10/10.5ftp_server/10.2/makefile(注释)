@@ -1,0 +1,23 @@
+GCC ?= g++  # 编译器是g++
+CCMODE = PROGRAM  # 编译模式，表示要生成可执行文件
+INCLUDES =  -I/opt/libevent/include/  # 编译时要包含的头文件目录
+CFLAGS =  -Wall $(MACRO)   # -Wall，表示显示所有警告信息，$(MACRO)，表示一个宏定义，可以在命令行中指定。
+TARGET = ftpSrv  #  要生成的目标文件的名称
+SRCS := $(wildcard *.cpp)   #匹配当前目录下所有以.cpp结尾的文件，并将它们作为源文件列表
+LIBS = -L /opt/libevent/lib/  -levent -lpthread  # 链接时要使用的库文件目录和库文件名称
+
+
+
+ifeq ($(CCMODE),PROGRAM)  # 如果CCMODE变量的值等于PROGRAM，则执行后面的规则
+$(TARGET): $(LINKS) $(SRCS)  # 目标文件ftpSrv依赖于(LINKS)和(SRCS)变量中指定的文件
+	$(GCC) $(CFLAGS) $(INCLUDES) -o $(TARGET)  $(SRCS) $(LIBS)
+	@chmod +x $(TARGET)
+	@echo make $(TARGET) ok.
+clean:
+	rm -rf $(TARGET)
+endif
+
+ 
+ 
+.PHONY:install
+.PHONY:clean

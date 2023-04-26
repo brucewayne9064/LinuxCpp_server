@@ -4,6 +4,7 @@
 #include <iostream>
 #include "XTask.h"
 
+
 //启动线程
 void XThread::Start(){
     testout(this->id << " thread At Start()");  //打印出当前线程的id和一条信息

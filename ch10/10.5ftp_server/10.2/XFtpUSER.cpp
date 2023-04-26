@@ -1,5 +1,7 @@
+#define TEST
 #include "XFtpUSER.h"
 #include "testUtil.h"
+
 
 void XFtpUSER::Parse(std::string, std::string) {
 	testout("AT XFtpUSER::Parse");
