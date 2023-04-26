@@ -31,7 +31,7 @@ using std::string;
 #include "XFtpFactory.h"
 
 
-#define SPORT 21
+#define SPORT 21  //必须有管理员权限才能用21号端口
 #define BUFS 1024
 
 #define XThreadPoolGet XThreadPool::Get()
@@ -85,7 +85,18 @@ int main(int argc, char* argv[]) {
 
 	if (base) {
 		cout << "begin to listen..." << endl;
+		FILE *f = fopen("events_before.txt", "w");
+		if (f) {
+    		event_base_dump_events(base, f);
+    		fclose(f);
+		}
 		event_base_dispatch(base);           //启动事件循环，监听注册到base中且注册到demultiplexer中的事件
+		f = fopen("events_after.txt", "w");
+		if (f) {
+    		event_base_dump_events(base, f);
+    		fclose(f);
+		}
+		cout << "Event loop ended" << endl;
 	}
 	if (ev)
 		evconnlistener_free(ev);  //关闭监听套接字并释放内存
